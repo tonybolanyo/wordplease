@@ -9,6 +9,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
+
+    list_display = ('title', 'author', 'updated', 'created', 'pub_date',)
+
     class Meta:
         model = Post
 
