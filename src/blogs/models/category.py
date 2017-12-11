@@ -3,7 +3,7 @@ from django.db import models
 from utils.models import TimeStampedModel
 
 
-class Category(models.Model):
+class Category(TimeStampedModel, models.Model):
     """
     Allows sort blog posts. Every post must have at least one category
     but it can have several ones.

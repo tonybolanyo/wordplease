@@ -4,11 +4,13 @@ from .models import Category, Post
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'name', 'updated', 'created')
+    list_editable = ('name',)
 
 
 class PostAdmin(admin.ModelAdmin):
-    pass
+    class Meta:
+        model = Post
 
 
 admin.site.register(Category, CategoryAdmin)
