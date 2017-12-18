@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+from blogs.models.blog import Blog
 from utils.models import TimeStampedModel
 
 
@@ -13,8 +14,8 @@ class Post(TimeStampedModel, models.Model):
     # featured_media = models.ImageFile()
     pub_date = models.DateTimeField(default=timezone.now)
 
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+    blog = models.ForeignKey(
+        Blog,
         on_delete=models.CASCADE,
     )
 
