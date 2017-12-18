@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from blogs.models import Post
 from blogs.models.blog import Blog
@@ -16,5 +16,10 @@ class HomePageView(ListView):
 
 
 class BlogListView(ListView):
+
+    model = Blog
+
+
+class BlogDetail(DetailView):
 
     model = Blog
