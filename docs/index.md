@@ -3,9 +3,9 @@ layout: default
 title: WordPlease
 ---
 
-# What is WordPlease?
+# ¿Qué es WordPlease?
 
-# Documentation index
+# Índice de la documentación
 
-- [How to install](installation.md)
-- [Routes available on website](web-routes.md).
+- [Cómo instalarlo](installation.md)
+- [Rutas disponibles en el sitio web](web-routes.md).
