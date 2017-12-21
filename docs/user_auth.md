@@ -11,6 +11,10 @@ básicas de login, logout o cambios de contraseña.
 Para implementar el sistema de acceso, las vistas login y
 logout están implementadas heredando de dichas vistas genéricas.
 
+Fácilmente se puede implementar el resto de funcionalidades
+ya provistas por Django como son el cambio de contraseña o el
+proceso de resetear una contraseña olvidada.
+
 En el caso del registro de usuario Django no aporta ninguna
 vista específica, pero sí un formulario que podemos utilizar.
 El formulario `SignupForm` hereda del formulario `UserCreationForm`
