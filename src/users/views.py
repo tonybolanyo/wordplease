@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import FormView
 
-from users.forms import LoginForm
+from users.forms import LoginForm, SignupForm
 
 
 class LoginView(LoginView):
@@ -17,4 +17,6 @@ class LogoutView(LogoutView):
 
 
 class SignupView(FormView):
-    pass
+
+    form_class = SignupForm
+    template_name = 'signup_form.html'
