@@ -22,5 +22,9 @@ class BlogListView(TemplateView):
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = '__all__'
+    fields = ('title', 'summary', 'body', 'pub_date')
     success_url = reverse_lazy('home_page')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CreatePostView, self).form_valid(form)

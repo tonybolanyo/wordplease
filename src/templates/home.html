@@ -3,6 +3,10 @@
 {% block content %}
 <h1>Welcome to WordPlease</h1>
 {% for post in object_list %}
-    <li>{{ post.title }}</li>
+    <div>
+        <h3>{{ post.title }} <small>by {{ post.author }}</small></h3>
+        <p>{{ post.summary }}</p>
+    </div>
+    <hr>
 {% endfor %}
 {% endblock content %}
