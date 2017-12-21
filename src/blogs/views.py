@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView, CreateView
@@ -19,7 +20,7 @@ class BlogListView(TemplateView):
     pass
 
 
-class CreatePostView(CreateView):
+class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     fields = '__all__'
     success_url = reverse_lazy('home_page')

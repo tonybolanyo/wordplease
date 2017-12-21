@@ -124,5 +124,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # default redirect after login
+LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
