@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from blogs.views import HomePageView, BlogListView
+from blogs.views import HomePageView, BlogListView, CreatePostView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogs/', BlogListView.as_view(), name='blog_list'),
+    path('new-post/', CreatePostView.as_view(), name='create_post'),
     path('', HomePageView.as_view(), name='home_page'),
 ]

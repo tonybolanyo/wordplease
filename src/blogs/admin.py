@@ -1,13 +1,6 @@
 from django.contrib import admin
 
-from blogs.models.blog import Blog
 from .models import Category, Post
-
-
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    #list_display = '__all__' # '('title', 'author')
-    pass
 
 
 @admin.register(Category)
@@ -19,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
 
-    list_display = ('title', 'updated', 'created', 'pub_date',)
+    list_display = ('title', 'author', 'updated', 'created', 'pub_date',)
 
 
 admin.site.site_title = 'WordPlease Admin'

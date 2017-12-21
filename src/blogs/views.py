@@ -1,8 +1,8 @@
+from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, TemplateView, CreateView
 
 from blogs.models import Post
-from blogs.models.blog import Blog
 
 
 class HomePageView(ListView):
@@ -15,11 +15,11 @@ class HomePageView(ListView):
         return queryset.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
 
-class BlogListView(ListView):
+class BlogListView(TemplateView):
+    pass
 
-    model = Blog
 
-
-class BlogDetail(DetailView):
-
-    model = Blog
+class CreatePostView(CreateView):
+    model = Post
+    fields = '__all__'
+    success_url = reverse_lazy('home_page')

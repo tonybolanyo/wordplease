@@ -2,8 +2,15 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-from blogs.models.blog import Blog
 from utils.models import TimeStampedModel
+
+
+class Category(TimeStampedModel, models.Model):
+
+    name = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ['name']
 
 
 class Post(TimeStampedModel, models.Model):
@@ -14,8 +21,8 @@ class Post(TimeStampedModel, models.Model):
     # featured_media = models.ImageFile()
     pub_date = models.DateTimeField(default=timezone.now)
 
-    blog = models.ForeignKey(
-        Blog,
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
 
