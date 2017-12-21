@@ -6,6 +6,12 @@
 </head>
 <body>
 
+{% if messages %}
+    {% for msg in messages %}
+        <div>{{ msg }}</div>
+    {% endfor %}
+{% endif %}
+
 {% block content %}
 {% endblock content %}
 
