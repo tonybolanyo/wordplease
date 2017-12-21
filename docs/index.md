@@ -9,3 +9,4 @@ title: WordPlease
 
 - [Cómo instalarlo](installation.md)
 - [Rutas disponibles en el sitio web](web-routes.md).
+- [Vistas y formulario de autenticación](user_auth.md).
