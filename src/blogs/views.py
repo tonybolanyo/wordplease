@@ -23,7 +23,7 @@ class BlogListView(TemplateView):
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ('title', 'summary', 'body', 'categories', 'pub_date')
+    fields = ('title', 'summary', 'body', 'categories', 'featured_media', 'pub_date')
     success_url = reverse_lazy('home_page')
 
     def form_valid(self, form):

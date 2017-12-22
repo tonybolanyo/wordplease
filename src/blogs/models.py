@@ -1,8 +1,10 @@
+import os
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
 from utils.models import TimeStampedModel
+
 
 
 class Category(TimeStampedModel, models.Model):
@@ -18,10 +20,15 @@ class Category(TimeStampedModel, models.Model):
 
 class Post(TimeStampedModel, models.Model):
 
+    def get_upload_path(instance, filename):
+        username = instance.author.username
+        today = timezone.now()
+        return os.sep.join([username, 'featured', str(today.year), str(today.month), filename])
+
     title = models.CharField(max_length=100)
     summary = models.TextField()
     body = models.TextField()
-    # featured_media = models.ImageFile()
+    featured_media = models.FileField(upload_to=get_upload_path, null=True, blank=True)
     pub_date = models.DateTimeField(default=timezone.now)
 
     author = models.ForeignKey(
