@@ -12,6 +12,9 @@ class Category(TimeStampedModel, models.Model):
     class Meta:
         ordering = ['name']
 
+    def __str__(self):
+        return self.name
+
 
 class Post(TimeStampedModel, models.Model):
 
@@ -25,6 +28,8 @@ class Post(TimeStampedModel, models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+
+    categories = models.ManyToManyField(Category)
 
     class Meta:
         ordering = ['-pub_date']
