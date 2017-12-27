@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Max
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView, CreateView
@@ -18,8 +19,15 @@ class HomePageView(ListView):
 
 class BlogListView(TemplateView):
 
-    pass
+    template_name = 'blogs/blog_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['blogs'] = Post.objects.filter(
+            pub_date__lte=timezone.now()).values(
+            'author__username', 'author__first_name', 'author__last_name').annotate(
+            num_posts=Count('id'), last_post=Max('pub_date')).order_by('author__username')
+        return context
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post

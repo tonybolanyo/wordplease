@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Blogs disponibles</h1>
+    {% for blog in blogs %}
+        <div>
+            <h3>El blog de {{ blog.author__first_name|default:blog.author__username|title }}</h3>
+            <p>
+                Artículos: {{ blog.num_posts }}<br>
+                Último artículo: {{ blog.last_post|date:"SHORT_DATE_FORMAT" }}
+            </p>
+            <p><a href="{% url 'posts_by_author' author_name=blog.author__username %}">Visitar</a></p>
+        </div>
+    {% empty %}
+        <p>No hay blogs disponibles en este momento</p>
+    {% endfor %}
+{% endblock content %}
