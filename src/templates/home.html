@@ -6,7 +6,7 @@
 {% for post in object_list %}
     <div>
         <h3>{{ post.title }} <small>by {{ post.author }}</small></h3>
-        <img src="{% get_media_prefix %}{{ post.featured_media }}" style="width: 120px">
+        <img src="{% get_media_prefix %}{{ post.featured_media }}">
         <p>{{ post.summary }}</p>
     </div>
     <hr>

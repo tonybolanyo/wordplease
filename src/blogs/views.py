@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Max
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, TemplateView, CreateView
+from django.views.generic import ListView, TemplateView, CreateView, DetailView
 
 from .models import Post
 
@@ -48,3 +48,8 @@ class PostsByAuthorView(ListView):
         queryset = super(PostsByAuthorView, self).get_queryset()
         author_name = self.kwargs['author_name']
         return queryset.filter(author__username=author_name, pub_date__lte=timezone.now()).order_by('-pub_date')
+
+
+class PostDetailView(DetailView):
+
+    model = Post
