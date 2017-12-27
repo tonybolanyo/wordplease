@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 
 from utils.models import TimeStampedModel
-
+from utils.validators import ContentTypeValidator
 
 
 class Category(TimeStampedModel, models.Model):
@@ -28,7 +28,10 @@ class Post(TimeStampedModel, models.Model):
     title = models.CharField(max_length=100)
     summary = models.TextField()
     body = models.TextField()
-    featured_media = models.FileField(upload_to=get_upload_path, null=True, blank=True)
+    featured_media = models.FileField(upload_to=get_upload_path, null=True, blank=True,
+                                      validators=[ContentTypeValidator(
+                                          accepted_types=['image/jpeg', 'image/png', 'image/gif',
+                                                          'video/mpeg', 'video/quicktime', 'video/mp4'])])
     pub_date = models.DateTimeField(default=timezone.now)
 
     author = models.ForeignKey(
