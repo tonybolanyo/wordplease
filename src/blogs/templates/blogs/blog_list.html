@@ -8,7 +8,7 @@
             <h3>El blog de {{ blog.author__first_name|default:blog.author__username|title }}</h3>
             <p>
                 Artículos: {{ blog.num_posts }}<br>
-                Último artículo: {{ blog.last_post|date:"SHORT_DATE_FORMAT" }}
+                Último artículo: {{ blog.last_post|date:"SHORT_DATE_FORMAT" }} {{ blog.last_post|time }}
             </p>
             <p><a href="{% url 'posts_by_author' author_name=blog.author__username %}">Visitar</a></p>
         </div>
