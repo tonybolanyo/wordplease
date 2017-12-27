@@ -131,3 +131,8 @@ LOGOUT_REDIRECT_URL = '/'
 # Media Files. For upload files to server
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# For featured media validators
+MAX_UPLOAD_SIZE = 1048576   # 1Mb
+ALLOWED_IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif']
+ALLOWED_VIDEO_MIME_TYPES = ['video/mpeg', 'video/quicktime', 'video/mp4']

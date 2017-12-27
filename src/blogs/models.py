@@ -30,9 +30,9 @@ class Post(TimeStampedModel, models.Model):
     body = models.TextField()
     featured_media = models.FileField(upload_to=get_upload_path, null=True, blank=True,
                                       validators=[ContentTypeValidator(
-                                          accepted_types=['image/jpeg', 'image/png', 'image/gif',
-                                                          'video/mpeg', 'video/quicktime', 'video/mp4']),
-                                      MaxFileSizeValidator(max_size=1048576)])
+                                          accepted_types=settings.ALLOWED_IMAGE_MIME_TYPES +
+                                                         settings.ALLOWED_VIDEO_MIME_TYPES),
+                                      MaxFileSizeValidator(max_size=settings.MAX_UPLOAD_SIZE)])
     pub_date = models.DateTimeField(default=timezone.now)
 
     author = models.ForeignKey(
