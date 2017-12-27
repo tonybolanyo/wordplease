@@ -53,3 +53,9 @@ class PostsByAuthorView(ListView):
 class PostDetailView(DetailView):
 
     model = Post
+
+    def get_queryset(self):
+        author = self.kwargs.get('author_name')
+        pk = self.kwargs.get('pk')
+        queryset = Post.objects.filter(author__username=author, pk=pk)
+        return queryset
