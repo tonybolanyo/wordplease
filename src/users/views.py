@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
@@ -35,3 +36,13 @@ class SignupView(FormView):
         user = authenticate(username=username, password=password)
         login(self.request, user)
         return redirect(self.success_url)
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Si el usuario ya está autenticado, lo redirecciona a la página
+        de redirección configurada para ir tras el login
+        """
+        if self.request.user.is_authenticated:
+            redirect_to = settings.LOGIN_REDIRECT_URL
+            return HttpResponseRedirect(redirect_to)
+        return super().dispatch(request, *args, **kwargs)
