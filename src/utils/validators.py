@@ -21,3 +21,21 @@ class ContentTypeValidator:
         content_type = file.file.content_type
         if content_type not in self.accepted_types:
             raise ValidationError(message=self.message, code=self.code)
+
+
+class MaxFileSizeValidator:
+
+    """
+    Valida que un archivo sea menor que el tamaño máximo permitido.
+    El tamaño se especifica en bytes.
+    """
+
+    message = 'File is too large'
+    code = 'max_file_size'
+
+    def __init__(self, max_size):
+        self.max_size = max_size
+
+    def __call__(self, file):
+        if self.max_size < file.size:
+            raise ValidationError(message=self.message, code=self.code)
