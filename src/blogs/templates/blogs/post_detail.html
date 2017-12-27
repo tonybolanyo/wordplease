@@ -5,5 +5,5 @@
     <img src="{% get_media_prefix %}{{ object.featured_media }}">
     <h1>{{ object.title }}</h1>
     <p><small>by {{ object.author.full_name|default:object.author|title }} at {{ object.pub_date }}</small></p>
-    <p>{{ object.body }}</p>
+    <p>{{ object.body|linebreaks }}</p>
 {% endblock content %}

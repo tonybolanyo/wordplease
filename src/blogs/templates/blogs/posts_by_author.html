@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ object_list }}
-{% include 'pagination.html' %}
+    {% include 'post_list_template.html' with post_list=object_list %}
+    {% include 'pagination.html' %}
 {% endblock content %}

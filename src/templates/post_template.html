@@ -1,0 +1,10 @@
+{% load static %}
+
+<div>
+    <img src="{% get_media_prefix %}{{ post.featured_media }}" style="max-width: 150px;">
+    <h3>{{ post.title }}</h3>
+    <p><small>by {{ post.author.full_name|default:post.author|title }} at {{ post.pub_date }}</small></p>
+    <div>
+        {{ post.summary|linebreaks }}
+    </div>
+</div>
