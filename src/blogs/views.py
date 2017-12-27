@@ -19,18 +19,17 @@ class HomePageView(ListView):
         return queryset.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
 
-class BlogListView(TemplateView):
+class BlogListView(ListView):
 
     template_name = 'blogs/blog_list.html'
+    paginate_by = settings.PAGINATION_DEFAULT_SIZE
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['blogs'] = Post.objects.filter(
+    def get_queryset(self):
+        queryset = Post.objects.filter(
             pub_date__lte=timezone.now()).values(
             'author__username', 'author__first_name', 'author__last_name').annotate(
             num_posts=Count('id'), last_post=Max('pub_date')).order_by('author__username')
-        return context
-
+        return queryset
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
