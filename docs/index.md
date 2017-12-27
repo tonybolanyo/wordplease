@@ -5,6 +5,9 @@ title: WordPlease
 
 # ¿Qué es WordPlease?
 
+WordPlease es el resultado de la práctica del módulo de Python/Django del III Bootcamp Web de KeepCoding. Los [requisitos
+de la práctica pueden leerse aquí](statements.md)
+
 # Índice de la documentación
 
 - [Cómo instalarlo](installation.md)
