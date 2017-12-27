@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Max
 from django.urls import reverse_lazy
@@ -11,6 +12,7 @@ class HomePageView(ListView):
 
     model = Post
     template_name = 'home.html'
+    paginate_by = settings.PAGINATION_DEFAULT_SIZE
 
     def get_queryset(self):
         queryset = super(HomePageView, self).get_queryset()
@@ -29,6 +31,7 @@ class BlogListView(TemplateView):
             num_posts=Count('id'), last_post=Max('pub_date')).order_by('author__username')
         return context
 
+
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ('title', 'summary', 'body', 'categories', 'featured_media', 'pub_date')
@@ -43,6 +46,7 @@ class PostsByAuthorView(ListView):
 
     model = Post
     template_name = 'blogs/posts_by_author.html'
+    paginate_by = settings.PAGINATION_DEFAULT_SIZE
 
     def get_queryset(self):
         queryset = super(PostsByAuthorView, self).get_queryset()

@@ -128,6 +128,9 @@ LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# Pagination
+PAGINATION_DEFAULT_SIZE = 5
+
 # Media Files. For upload files to server
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
