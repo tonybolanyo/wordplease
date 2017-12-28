@@ -27,12 +27,42 @@ a, h1, h2, h3, h4, h5, h6 {
     color: #424254;
 }
 
+button.fullwidth, .button.fullwidth, input[type='button'].fullwidth, input[type='reset'].fullwidth, input[type='submit'].fullwidth {
+    width: 100%;
+}
+
 select[multiple] {
     height: 100%;
 }
 
 button, input, optgroup, select, textarea {
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+form p {
+    line-height: 1;
+}
+
+form .helptext {
+    font-size: small;
+}
+
+ul.errorlist {
+    color: #CC2A41;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+label.form-required::before {
+    content: "*";
+}
+
+.form-error label {
+    color: #CC2A41;
+}
+
+.form-error input, .form-error select {
+    border-color: #CC2A41;
 }
 
 /* Navbar */
