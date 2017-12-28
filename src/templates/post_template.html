@@ -1,15 +1,23 @@
 {% load static %}
 
 <div class="column column-33 post-card">
-    <img src="{% get_media_prefix %}{{ post.featured_media }}" class="post-card-image">
-    <h3 class="post-card-title">
-        <a href="{% url 'post_detail' author_name=post.author.username pk=post.pk %}">
-            {{ post.title }}
-        </a>
-        <span class="post-author">by {{ post.author.full_name|default:post.author|title }}</span>
-    </h3>
-    <p class="post-card-meta">{{ post.pub_date }}</p>
-    <div class="post-card-content">
-        {{ post.summary|linebreaks }}
+    <div class="post-card-header">
+        {% if post.featured_media %}
+            <img src="{% get_media_prefix %}{{ post.featured_media }}" class="post-card-image">
+        {% else %}
+            <img src="{% static 'images/no_image.jpg' %}" class="post-card-image">
+        {% endif %}
+    </div>
+    <div class="post-card-body">
+        <h3 class="post-card-title">
+            <a href="{% url 'post_detail' author_name=post.author.username pk=post.pk %}">
+                {{ post.title }}
+            </a>
+            <span class="post-author">by {{ post.author.full_name|default:post.author|title }}</span>
+        </h3>
+        <p class="post-card-meta">{{ post.pub_date }}</p>
+        <div class="post-card-content">
+            {{ post.summary|linebreaks }}
+        </div>
     </div>
 </div>

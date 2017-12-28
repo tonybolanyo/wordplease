@@ -1,3 +1,15 @@
+/* General */
+
+a, h1, h2, h3, h4, h5, h6 {
+    color: #64908A;
+}
+
+/* Forms */
+.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+    background-color: #64908A;
+    border-color: #64908A;
+}
+
 /* Navbar */
 .navigation {
     background: #f4f5f6;
@@ -59,7 +71,7 @@
 .post-card {
     border: .1rem solid #d1d1d1;
     margin: 1rem;
-    padding: 1rem;
+    padding: 0 !important;
 }
 
 .post-card-title {
@@ -72,4 +84,19 @@
 
 .post-card-meta {
     font-size: 80%;
+}
+
+.post-card-header {
+    height: 150px;
+    overflow: hidden;
+}
+
+.post-card-image {
+    object-fit: cover;
+    max-height: 150px;
+    width: 100%;
+}
+
+.post-card-body {
+    margin: 1rem;
 }
