@@ -1,35 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="{% static 'css/milligram.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/wordplease.css' %}">
 </head>
+
 <body>
-<ul>
-    <li><a href="{% url 'home_page' %}">Home</a></li>
-    <li><a href="{% url 'blog_list' %}">Blogs</a></li>
-    {% if user.is_authenticated %}
-        <li><a href="{% url 'create_post' %}">New post</a></li>
-        <li><a href="{% url 'logout_page' %}">Logout</a></li>
-        <li>Conectado como: {{ user.username }}</li>
-    {% else %}
-        <li><a href="{% url 'login_page' %}">Login</a></li>
-        <li><a href="{% url 'signup_page' %}">Signup</a></li>
-    {% endif %}
-</ul>
 
-<div>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</div>
+<header>
+    <nav class="navigation">
+        <section class="container">
+            <a class="navigation-title" href="{% url 'home_page' %}">
+                <h1 class="navigation-title"><b>Word</b>Please</h1>
+            </a>
+            <ul class="navigation-list float-right">
+                <li class="navigation-item">
+                    <a class="navigation-link" href="{% url 'blog_list' %}">Blogs</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="navigation-item">
+                    <a class="navigation-link" href="{% url 'create_post' %}">New post</a>
+                </li>
+                <li class="navigation-item">
+                    <a class="navigation-link" href="{% url 'logout_page' %}">Logout</a>
+                </li>
+                <li class="navigation-item">
+                    <span class="navigation-text">Conectado como: {{ user.username }}</span>
+                </li>
+                {% else %}
+                <li class="navigation-item">
+                    <a class="navigation-link" href="{% url 'login_page' %}">Login</a>
+                </li>
+                <li class="navigation-item">
+                    <a class="navigation-link" href="{% url 'signup_page' %}">Signup</a>
+                </li>
+                {% endif %}
+            </ul>
+        </section>
+    </nav>
+</header>
 
-{% block content %}
-{% endblock content %}
+<main class="wrapper container">
+    <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    {% block content %}
+    {% endblock content %}
+</main>
+
+<footer class="footer">
+    <div class="container">
+        Made by Tony G. Bolaño for KeepCoding Bootcamp Web. December 2017.
+    </div>
+</footer>
 
 </body>
 </html>

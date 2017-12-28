@@ -31,6 +31,7 @@ class BlogListView(ListView):
             num_posts=Count('id'), last_post=Max('pub_date')).order_by('author__username')
         return queryset
 
+
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ('title', 'summary', 'body', 'categories', 'featured_media', 'pub_date')
