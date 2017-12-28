@@ -1,3 +1,8 @@
+<div class="row post-list-container">
 {% for post in post_list %}
     {% include 'post_template.html' with post=post %}
+    {% if forloop.counter|divisibleby:3 %}
+        </div><div class="row">
+    {% endif %}
 {% endfor %}
+</div>

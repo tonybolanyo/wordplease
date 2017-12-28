@@ -27,7 +27,7 @@
 }
 
 .navigation-title {
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 .navigation-list {
@@ -52,4 +52,24 @@
     border-top: .1rem solid #d1d1d1;
     min-height: 5.2rem;
     padding-top: 1rem;
+}
+
+/* Post cards */
+
+.post-card {
+    border: .1rem solid #d1d1d1;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.post-card-title {
+    margin-bottom: 0;
+}
+
+.post-card-title .post-author {
+    font-size: 65%;
+}
+
+.post-card-meta {
+    font-size: 80%;
 }
