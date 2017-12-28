@@ -12,6 +12,10 @@ a, h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
+.container {
+    max-width: 80rem;
+}
+
 /* Forms */
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: #64908A;
@@ -22,6 +26,15 @@ a, h1, h2, h3, h4, h5, h6 {
     background-color: transparent;
     color: #424254;
 }
+
+select[multiple] {
+    height: 100%;
+}
+
+button, input, optgroup, select, textarea {
+    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
 /* Navbar */
 .navigation {
     background: #f4f5f6;
