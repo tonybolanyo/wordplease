@@ -3,18 +3,31 @@
 
 {% block content %}
     <h1>Blogs disponibles</h1>
-    {% for blog in object_list %}
-        <div>
-            <h3>El blog de {{ blog.author__first_name|default:blog.author__username|title }}</h3>
-            <p>
-                Artículos: {{ blog.num_posts }}<br>
-                Último artículo: {{ blog.last_post|date:"SHORT_DATE_FORMAT" }} {{ blog.last_post|time }}
-            </p>
-            <p><a href="{% url 'posts_by_author' author_name=blog.author__username %}">Visitar</a></p>
-        </div>
-    {% empty %}
-        <p>No hay blogs disponibles en este momento</p>
-    {% endfor %}
+    <div class="row">
+        {% for blog in object_list %}
+            <div class="column blog-card">
+                <h3>
+                    <a href="{% url 'posts_by_author' author_name=blog.author__username %}">
+                        El blog de {{ blog.author__first_name|default:blog.author__username|title }}
+                    </a>
+                </h3>
+                <blockquote>
+                    Artículos publicados: {{ blog.num_posts }}<br>
+                    Última publicación: {{ blog.last_post|date:"SHORT_DATE_FORMAT" }} {{ blog.last_post|time }}
+                </blockquote>
+                <p class="text-center">
+                    <a class="button button-outline" href="{% url 'posts_by_author' author_name=blog.author__username %}">
+                        Visitar
+                    </a>
+                </p>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+                </div><div class="row">
+            {% endif %}
+        {% empty %}
+            <p>No hay blogs disponibles en este momento</p>
+        {% endfor %}
+    </div>
 
     {% include 'pagination.html' %}
 {% endblock content %}

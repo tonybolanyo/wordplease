@@ -4,12 +4,24 @@ a, h1, h2, h3, h4, h5, h6 {
     color: #64908A;
 }
 
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
 /* Forms */
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: #64908A;
     border-color: #64908A;
 }
 
+.button.button-outline, button.button-outline, input[type='button'].button-outline, input[type='reset'].button-outline, input[type='submit'].button-outline {
+    background-color: transparent;
+    color: #424254;
+}
 /* Navbar */
 .navigation {
     background: #f4f5f6;
@@ -99,4 +111,12 @@ a, h1, h2, h3, h4, h5, h6 {
 
 .post-card-body {
     margin: 1rem;
+}
+
+/* Blog cards */
+
+.blog-card {
+    border: .1rem solid #d1d1d1;
+    margin: 1rem;
+    padding: 1rem !important;
 }
