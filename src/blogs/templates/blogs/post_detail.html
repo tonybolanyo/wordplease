@@ -8,14 +8,18 @@
 {% block content %}
     {% if object.featured_media %}
         {% if object.is_featured_video %}
-            <video src="{% get_media_prefix %}{{ object.featured_media }}" controls class="post-card-image"></video>
+            <video src="{% get_media_prefix %}{{ object.featured_media }}" controls></video>
         {% else %}
-            <img src="{% get_media_prefix %}{{ object.featured_media }}" class="post-card-image">
+            <img src="{% get_media_prefix %}{{ object.featured_media }}">
         {% endif %}
     {% else %}
-        <img src="{% static 'images/no_image.jpg' %}" class="post-card-image">
+        <img src="{% static 'images/no_image.jpg' %}">
     {% endif %}
     <h1>{{ object.title }}</h1>
-    <p><small>by {{ object.author.full_name|default:object.author|title }} at {{ object.pub_date }}</small></p>
+    <p>
+        <small>
+            by {{ object.author.full_name|default:object.author|title }} at {{ object.pub_date }}
+        </small>
+    </p>
     <p>{{ object.body|linebreaks }}</p>
 {% endblock content %}
