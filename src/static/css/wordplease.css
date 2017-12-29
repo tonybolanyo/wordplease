@@ -163,3 +163,46 @@ label.form-required::before {
     margin: 1rem;
     padding: 1rem !important;
 }
+
+/* Pagination */
+ul.pagination {
+    list-style: none;
+    margin: 2rem auto;
+    text-align: center;
+    padding: 0;
+}
+
+ul.pagination .pagination-page {
+    display: inline-block;
+    margin: 0;
+    min-width: 3rem;
+}
+
+ul.pagination .pagination-page.disabled {
+    display: inline-block;
+    margin: 0;
+    min-width: 3rem;
+    border: solid 1px #d1d1d1;
+    border-radius: .4rem;
+    color: #d1d1d1;
+    padding: 0 .5rem;
+}
+
+ul.pagination .pagination-page.active {
+    display: inline-block;
+    margin: 0;
+    min-width: 3rem;
+    border: solid .1rem #64908A;
+    border-radius: .4rem;
+    color: #ffffff;
+    background-color: #64908A;
+    padding: 0 .5rem;
+    font-weight: bold;
+}
+
+ul.pagination .pagination-page > a {
+    display: block;
+    border: solid 1px #64908A;
+    border-radius: .4rem;
+    padding: 0 .5rem;
+}
