@@ -39,6 +39,10 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        mime_type = form.instance.featured_media.file.content_type
+        # Como ya está validado, o es un vídeo o una imagen de los tipos aceptados
+        # así que basta con comprobar si es un vídeo.
+        form.instance.is_featured_video = mime_type in settings.ALLOWED_VIDEO_MIME_TYPES
         return super(CreatePostView, self).form_valid(form)
 
 

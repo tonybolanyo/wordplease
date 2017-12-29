@@ -33,6 +33,7 @@ class Post(TimeStampedModel, models.Model):
                                           accepted_types=settings.ALLOWED_IMAGE_MIME_TYPES +
                                                          settings.ALLOWED_VIDEO_MIME_TYPES),
                                       MaxFileSizeValidator(max_size=settings.MAX_UPLOAD_SIZE)])
+    is_featured_video = models.BooleanField(default=False)
     pub_date = models.DateTimeField(default=timezone.now)
 
     author = models.ForeignKey(

@@ -3,7 +3,11 @@
 <div class="column column-33 post-card">
     <div class="post-card-header">
         {% if post.featured_media %}
-            <img src="{% get_media_prefix %}{{ post.featured_media }}" class="post-card-image">
+            {% if post.is_featured_video %}
+                <video src="{% get_media_prefix %}{{ post.featured_media }}" controls class="post-card-image"></video>
+            {% else %}
+                <img src="{% get_media_prefix %}{{ post.featured_media }}" class="post-card-image">
+            {% endif %}
         {% else %}
             <img src="{% static 'images/no_image.jpg' %}" class="post-card-image">
         {% endif %}

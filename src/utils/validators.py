@@ -2,13 +2,17 @@
 # List of MIME types: https://www.sitepoint.com/mime-types-complete-list/
 
 from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 
 
+@deconstructible
 class ContentTypeValidator:
 
     """
     Valida que el `content_type` de un archivo esté contenido el la lista
     `accepted_types`.
+    Debe ser serializable para que funcione con las migraciones:
+    https://docs.djangoproject.com/en/2.0/ref/validators/
     """
 
     message = 'Content type not accepted'
@@ -23,11 +27,14 @@ class ContentTypeValidator:
             raise ValidationError(message=self.message, code=self.code)
 
 
+@deconstructible
 class MaxFileSizeValidator:
 
     """
     Valida que un archivo sea menor que el tamaño máximo permitido.
     El tamaño se especifica en bytes.
+    Debe ser serializable para que funcione con las migraciones:
+    https://docs.djangoproject.com/en/2.0/ref/validators/
     """
 
     message = 'File is too large'
