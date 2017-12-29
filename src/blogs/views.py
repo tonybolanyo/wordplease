@@ -1,11 +1,16 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Max
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView, CreateView, DetailView
 
 from .models import Post
+
+
+User = get_user_model()
 
 
 class HomePageView(ListView):
@@ -54,8 +59,15 @@ class PostsByAuthorView(ListView):
 
     def get_queryset(self):
         queryset = super(PostsByAuthorView, self).get_queryset()
-        author_name = self.kwargs['author_name']
+        author_name = self.kwargs.get('author_name')
         return queryset.filter(author__username=author_name, pub_date__lte=timezone.now()).order_by('-pub_date')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        author_name = self.kwargs.get('author_name')
+        user = get_object_or_404(User, username=author_name)
+        context['author'] = user
+        return context
 
 
 class PostDetailView(DetailView):

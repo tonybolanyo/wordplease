@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head_title %}
+Welcome
+{% endblock head_title %}
+
 {% block content %}
     <h1>Welcome to WordPlease</h1>
     {% include 'post_list_template.html' with post_list=object_list %}

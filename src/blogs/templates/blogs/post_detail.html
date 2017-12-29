@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head_title %}
+{{ object.title }}
+{% endblock head_title %}
+
 {% block content %}
     {% if object.featured_media %}
         {% if object.is_featured_video %}

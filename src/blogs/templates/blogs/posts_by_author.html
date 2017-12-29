@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
+{% block head_title %}
+Posts by {{ author.first_name|default:author|title }}
+{% endblock head_title %}
+
 {% block content %}
+
+    <h1>Posts by {{ author.first_name|default:author|title }}</h1>
+
     {% include 'post_list_template.html' with post_list=object_list %}
     {% include 'pagination.html' %}
 {% endblock content %}
