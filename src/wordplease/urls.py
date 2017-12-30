@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 from blogs.views import HomePageView, BlogListView, CreatePostView, PostsByAuthorView, PostDetailView
-from users.api import UserDetailAPI
+from users.api import UserDetailAPI, CreateUserAPIView
 from users.views import LoginView, LogoutView, SignupView
 
 urlpatterns = [
@@ -35,6 +35,7 @@ urlpatterns = [
 
     # API REST
     path('api/1.0/users/<int:pk>', UserDetailAPI.as_view(), name='api_user_detail'),
+    path('api/1.0/users/', CreateUserAPIView.as_view(), name='api_create_user'),
 ]
 
 if settings.DEBUG:

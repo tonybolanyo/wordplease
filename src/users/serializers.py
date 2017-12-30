@@ -1,9 +1,18 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.Serializer):
+User = get_user_model()
 
-    username = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    email = serializers.EmailField()
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
+        write_only_fields = ('password',)
+        read_only_fields = ('id',)
+
+    def validate_password(self, password):
+        return make_password(password)
