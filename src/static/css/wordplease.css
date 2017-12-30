@@ -206,3 +206,11 @@ ul.pagination .pagination-page > a {
     border-radius: .4rem;
     padding: 0 .5rem;
 }
+
+/* labels and badges */
+
+.badge {
+    background-color: #f4f5f6;
+    padding: .5rem;
+    border-radius: .4rem;
+}
