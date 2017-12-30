@@ -19,7 +19,11 @@
             </a>
             <span class="post-author">by {{ post.author.full_name|default:post.author|title }}</span>
         </h3>
-        <p class="post-card-meta">{{ post.pub_date }}</p>
+        <p class="post-card-meta">{{ post.pub_date }}
+            {% if post.categories.count > 0 %}
+                in {{ post.categories.all|join:" | " }}
+            {% endif %}
+        </p>
         <div class="post-card-content">
             {{ post.summary|linebreaks }}
         </div>

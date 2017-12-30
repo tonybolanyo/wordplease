@@ -19,7 +19,12 @@
     <p>
         <small>
             by {{ object.author.full_name|default:object.author|title }} at {{ object.pub_date }}
+            <br>
+            {% if post.categories.count > 0 %}
+                in {{ post.categories.all|join:" | " }}
+            {% endif %}
         </small>
+
     </p>
     <p>{{ object.body|linebreaks }}</p>
 {% endblock content %}
