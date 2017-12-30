@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
         write_only_fields = ('password',)
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'created', 'updated')
 
     def validate_password(self, password):
         return make_password(password)
