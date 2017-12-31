@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from blogs.api import PostListAPIView, PostCreateAPIView
+from blogs.api import PostListAPIView, PostCreateAPIView, PostDetailAPIView
 from blogs.views import HomePageView, BlogListView, CreatePostView, PostsByAuthorView, PostDetailView
 from users.api import UserDetailAPI, CreateUserAPIView
 from users.views import LoginView, LogoutView, SignupView
@@ -37,6 +37,7 @@ urlpatterns = [
     # API REST
     path('api/1.0/posts/', PostCreateAPIView.as_view(), name='api_create_post'),
     path('api/1.0/posts/<str:author_name>/', PostListAPIView.as_view(), name='api_posts_list'),
+    path('api/1.0/posts/<str:author_name>/<int:pk>', PostDetailAPIView.as_view(), name='api_post_detail'),
     path('api/1.0/users/<int:pk>', UserDetailAPI.as_view(), name='api_user_detail'),
     path('api/1.0/users/', CreateUserAPIView.as_view(), name='api_create_user'),
 ]

@@ -1,5 +1,5 @@
 from django.utils import timezone
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from blogs.models import Post
@@ -27,3 +27,9 @@ class PostCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
+
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
