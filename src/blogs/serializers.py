@@ -8,7 +8,6 @@ class PostBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'featured_media', 'is_featured_video', 'summary', 'pub_date')
-        read_only_fields = ('id',)
 
 
 class PostSerializer(PostBasicSerializer):
@@ -16,4 +15,4 @@ class PostSerializer(PostBasicSerializer):
     class Meta:
         model = Post
         fields = '__all__'
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'author', 'created', 'updated')
