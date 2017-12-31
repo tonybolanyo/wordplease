@@ -1,4 +1,6 @@
 from django.utils import timezone
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -21,6 +23,9 @@ class OwnerAdminFuturePostMixin:
 class PostListAPIView(OwnerAdminFuturePostMixin, ListAPIView):
 
     serializer_class = PostBasicSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'summary', 'body']
+    filter_fields = ['categories']
 
     def get_queryset(self):
         author = self.kwargs.get('author_name')
