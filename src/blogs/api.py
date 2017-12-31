@@ -35,3 +35,11 @@ class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsOwnerAdminOrReadOnly]
+
+    def get_queryset(self):
+        author = self.kwargs.get('author_name')
+        queryset = Post.objects.filter(author__username=author)
+        user = self.request.user
+        if user.username != author and not user.is_superuser:
+            queryset = queryset.filter(pub_date__lte=timezone.now())
+        return queryset
