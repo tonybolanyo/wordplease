@@ -2,6 +2,7 @@
 # List of MIME types: https://www.sitepoint.com/mime-types-complete-list/
 
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.deconstruct import deconstructible
 
 
@@ -22,9 +23,14 @@ class ContentTypeValidator:
         self.accepted_types = accepted_types
 
     def __call__(self, file):
-        content_type = file.file.content_type
-        if content_type not in self.accepted_types:
-            raise ValidationError(message=self.message, code=self.code)
+        # Solamente validamos si el archivo es nuevo
+        # y no si el archivo ya estaba en el campo
+        # de una operación anterior, en cuyo caso
+        # ya estaría validado
+        if type(file.file) == InMemoryUploadedFile:
+            content_type = file.file.content_type
+            if content_type not in self.accepted_types:
+                raise ValidationError(message=self.message, code=self.code)
 
 
 @deconstructible
