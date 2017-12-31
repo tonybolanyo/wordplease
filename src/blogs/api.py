@@ -2,8 +2,9 @@ from django.utils import timezone
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from blogs.models import Post
-from blogs.serializers import PostSerializer, PostBasicSerializer
+from .models import Post
+from .permissions import IsOwnerAdminOrReadOnly
+from .serializers import PostSerializer, PostBasicSerializer
 
 
 class PostListAPIView(ListAPIView):
@@ -33,3 +34,4 @@ class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsOwnerAdminOrReadOnly]
