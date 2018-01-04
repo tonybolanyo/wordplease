@@ -1,6 +1,20 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Post
+
+
+User = get_user_model()
+
+
+class BlogSerializer(serializers.ModelSerializer):
+
+    posts_count = serializers.IntegerField()
+    last_post_date = serializers.DateTimeField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'posts_count', 'last_post_date')
 
 
 class PostBasicSerializer(serializers.ModelSerializer):

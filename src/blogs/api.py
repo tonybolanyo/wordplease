@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+from django.db.models import Count, Max
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -6,7 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Post
 from .permissions import IsOwnerAdminOrReadOnly
-from .serializers import PostSerializer, PostBasicSerializer
+from .serializers import PostSerializer, PostBasicSerializer, BlogSerializer
+
+
+User = get_user_model()
 
 
 class OwnerAdminFuturePostMixin:
@@ -55,3 +60,11 @@ class PostDetailAPIView(OwnerAdminFuturePostMixin, RetrieveUpdateDestroyAPIView)
 
     serializer_class = PostSerializer
     permission_classes = [IsOwnerAdminOrReadOnly]
+
+
+class BlogListAPIView(ListAPIView):
+
+    serializer_class = BlogSerializer
+    queryset = User.objects.annotate(
+        posts_count=Count('post'), last_post_date=Max('post__pub_date')).filter(posts_count__gt=0)
+
