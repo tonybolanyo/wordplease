@@ -64,7 +64,14 @@ class PostDetailAPIView(OwnerAdminFuturePostMixin, RetrieveUpdateDestroyAPIView)
 
 class BlogListAPIView(ListAPIView):
 
-    serializer_class = BlogSerializer
-    queryset = User.objects.annotate(
-        posts_count=Count('post'), last_post_date=Max('post__pub_date')).filter(posts_count__gt=0)
+    """
+    Solamente tiene en cuenta posts que no tengan fecha de
+    publicación en el futuro.
+    """
 
+    serializer_class = BlogSerializer
+    queryset = User.objects.filter(post__pub_date__lte=timezone.now()).annotate(
+        posts_count=Count('post'), last_post_date=Max('post__pub_date')).filter(posts_count__gt=0)
+    filter_backends = [OrderingFilter]
+    ordering_fields = ('username', 'posts_count', 'last_post_date')
+    ordering = '-last_post_date'

@@ -145,3 +145,8 @@ MEDIA_URL = '/media/'
 MAX_UPLOAD_SIZE = 1048576   # 1Mb
 ALLOWED_IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 ALLOWED_VIDEO_MIME_TYPES = ['video/mpeg', 'video/quicktime', 'video/mp4']
+
+# REST Framework
+REST_FRAMEWORK = {
+    'ORDERING_PARAM': 'order'
+}
