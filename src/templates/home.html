@@ -7,6 +7,6 @@ Welcome
 
 {% block content %}
     <h1>Welcome to WordPlease</h1>
-    {% include 'post_list_template.html' with post_list=object_list %}
+    {% include 'blogs/post_list_template.html' with post_list=object_list %}
     {% include 'pagination.html' %}
 {% endblock content %}

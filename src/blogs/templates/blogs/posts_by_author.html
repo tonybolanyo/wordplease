@@ -8,6 +8,6 @@ Posts by {{ author.first_name|default:author|title }}
 
     <h1>Posts by {{ author.first_name|default:author|title }}</h1>
 
-    {% include 'post_list_template.html' with post_list=object_list %}
+    {% include 'blogs/post_list_template.html' with post_list=object_list %}
     {% include 'pagination.html' %}
 {% endblock content %}
