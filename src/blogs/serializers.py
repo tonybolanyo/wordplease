@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.reverse import reverse_lazy
 
 from .models import Post
 
@@ -11,10 +12,14 @@ class BlogSerializer(serializers.ModelSerializer):
 
     posts_count = serializers.IntegerField()
     last_post_date = serializers.DateTimeField()
+    blog_url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'posts_count', 'last_post_date')
+        fields = ('username', 'first_name', 'last_name', 'posts_count', 'last_post_date', 'blog_url')
+
+    def get_blog_url(self, instance):
+        return reverse_lazy('api_posts_list', kwargs={'author_name': instance.username})
 
 
 class PostBasicSerializer(serializers.ModelSerializer):
