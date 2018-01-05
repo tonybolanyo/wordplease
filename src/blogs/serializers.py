@@ -8,6 +8,13 @@ from .models import Post
 User = get_user_model()
 
 
+class AuthorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+
 class BlogSerializer(serializers.ModelSerializer):
 
     posts_count = serializers.IntegerField()
@@ -24,9 +31,11 @@ class BlogSerializer(serializers.ModelSerializer):
 
 class PostBasicSerializer(serializers.ModelSerializer):
 
+    author = AuthorSerializer()
+
     class Meta:
         model = Post
-        fields = ('id', 'title', 'featured_media', 'is_featured_video', 'summary', 'pub_date')
+        fields = ('id', 'title', 'featured_media', 'is_featured_video', 'summary', 'pub_date', 'author')
 
 
 class PostSerializer(PostBasicSerializer):
