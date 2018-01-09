@@ -14,3 +14,4 @@ de la práctica pueden leerse aquí](statements.md)
 - [Rutas disponibles en el sitio web](web-routes.md).
 - [Vistas y formulario de autenticación](user_auth.md).
 - [Sobre la implementación de la lista de blogs](listing_blogs.md)
+- [Despliegue](deploy.md)
