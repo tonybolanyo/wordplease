@@ -1,3 +1,8 @@
+---
+layout: default
+title: Despliegue
+---
+
 Here you can read some notes I take while deploying nodepop on a free tier AWS server.
 
 # Crear máquina virtual
