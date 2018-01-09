@@ -74,3 +74,67 @@ Si todo ha ido bien, esta será la forma de conexión a partir de ahora y podemo
 
 **Si alguna vez perdemos el acceso a la máquina por SSH** y necesitamos configurar de nuevo el servicio, el mecanismo que podemos usar sería conectar el disco a otra máquina virtual y editar los archivos de configuración desde la otra máquina. Volviendo a poner el disco en la máquina original cuando hayamos acabado de reconfigurar.
 
+# Instalar paquetes necesartios
+
+Lo primero será instalar postgreSQL, nginx y algunas librerías adicionales necesarias para compilar python.
+
+```
+sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev python-setuptools circus
+```
+
+# Crear un usuario para la aplicación
+
+Para controlar los permisos de la aplicación es recomendable utilizar un usuario para la propia aplicación, así que vamos a crearlo, pero impidiendo que pueda hacer login en la consola. Además lo incluiremos en el grupo de nginx (normalmente www-data)
+
+```
+sudo adduser wordplease
+sudo passwd -l wordplease
+sudo adduser www-data wordplease
+```
+
+El siguiente paso es crear la base de datos y un usuario en ella para los datos de la aplicación:
+
+```
+sudo -u postgres createuser wordplease
+sudo -u postgres createdb wordplease -O wordplease
+```
+
+# Clonar la aplicación en el directorio del usuario de la aplicación
+
+Lo primero será identificarnos como el usuario en cuestión
+
+```
+sudo -u wordplease -i
+```
+
+## Instalación de pyenv
+
+Esto nos permite instalar cualquier versión de Python fácilmente y, por supuesto, crear diferentes entornos separados.
+
+```
+git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+```
+
+Después de eso, hay que preparar el perfil de bash para cada inicio de sesión, de forma que utilice pyenv:
+
+```
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
+```
+
+Para que los cambios surjan efecto cerramos la sesión del usuario y la volvemos a abrir:
+
+```
+logout
+sudo -u wordplease -i
+```
+
+Ahora ya podemos instalar la versión de Python que necesitemos, en nuestro caso vamos a usar la última disponible y después crear un entorno virtual:
+
+```
+pyenv install 3.6.4
+pyenv virtualenv 3.6.4 env
+```
