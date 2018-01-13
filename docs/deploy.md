@@ -288,6 +288,83 @@ $ sudo nginx -t
 $ sudo service nginx restart
 ```
 
+# Configurando acceso por HTTPS
+
+Lo primero que necesitamos es un certificado y para ello lo más simple y barato es usar
+el servicio proporcionado por [Let's Encrypt](https://letsencrypt.org/). En este caso
+vamos a utilizar el asistente [certbot](https://certbot.eff.org/) para nuestro sistema, siguiendo las
+instrucciones que nos proporcionan en la web [para ubuntu 16.04](https://certbot.eff.org/#ubuntuxenial-nginx).
+
+Lo primero es instalar certbot
+
+```
+$ sudo apt-get update
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+$ sudo apt-get install python-certbot-nginx 
+```
+
+Y después lanzar el asistente para configurar automáticamente el sitio web.
+Ten en cuenta que para verificar el servidor Let's Encrypt necesita acceder
+a algunos archivos que sitúa en el directorio `.well-known`. Con la configuración
+inicial del sitio web que hemos hecho decíamos que el directorio raíz de
+nuestra aplicación coincidía con el directorio src de la misma y, no servíamos
+archivos directamente desde src, por lo que necesitamos cambiar esto. Ahora
+el nuevo archivo de configuración de nginx quedaría así:
+
+```
+# /etc/nginx/sites-available/wordplease
+
+server {
+	listen 80;
+	server_name wordplease.tonygb.com;
+
+	access_log /home/wordplease/logs/nginx-access.log;
+	error_log /home/wordplease/logs/nginx-error.log;
+
+	root /var/www/wordplease/;
+
+	client_max_body_size 10M;
+
+	location /static {
+		alias /home/wordplease/wordplease/src/static;
+	}
+
+    location /media {
+        alias /home/wordplease/wordplease/src/media;
+    }
+
+	location / {
+	    try_files $uri @django;
+	}
+	
+	location @django {
+		include proxy_params;
+		proxy_pass http://unix:/home/wordplease/wordplease.sock;
+	}
+
+}
+
+```
+
+Antes de lanzar el asistente certbot debemos crear el directorio raíz y,
+tras comprobar que la configuración es correcta, reiniciar nginx:
+
+```
+$ sudo mkdir /var/www/wordplease
+$ sudo nginx -t
+$ sudo service nginx restart
+$ sudo certbot --authenticator webroot --installer nginx
+```
+
+Esta manera de autenticar el dominio de certbot ha cambiado debido a
+un problema de seguridad que puedes
+[leer aquí](https://community.letsencrypt.org/t/2018-01-11-update-regarding-acme-tls-sni-and-shared-hosting-infrastructure/50188).
+
+Una vez realizados todos los pasos del asistente ya tenemos acceso a través de HTTPS.
+
+
 # Referencias
 Basado en el gist https://gist.github.com/kasappeal/b54ecf22ca302223fa914d3e355c7c21
 de Alberto Casero.
