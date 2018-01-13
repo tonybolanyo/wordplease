@@ -84,7 +84,7 @@ Si todo ha ido bien, esta será la forma de conexión a partir de ahora y podemo
 Lo primero será instalar postgreSQL, nginx y algunas librerías adicionales necesarias para compilar python.
 
 ```
-sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev python-setuptools circus
+$ sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev python-setuptools circus
 ```
 
 # Crear un usuario para la aplicación
@@ -92,16 +92,16 @@ sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libb
 Para controlar los permisos de la aplicación es recomendable utilizar un usuario para la propia aplicación, así que vamos a crearlo, pero impidiendo que pueda hacer login en la consola. Además lo incluiremos en el grupo de nginx (normalmente www-data)
 
 ```
-sudo adduser wordplease
-sudo passwd -l wordplease
-sudo adduser www-data wordplease
+$ sudo adduser wordplease
+$ sudo passwd -l wordplease
+$ sudo adduser www-data wordplease
 ```
 
 El siguiente paso es crear la base de datos y un usuario en ella para los datos de la aplicación:
 
 ```
-sudo -u postgres createuser wordplease
-sudo -u postgres createdb wordplease -O wordplease
+$ sudo -u postgres createuser wordplease
+$ sudo -u postgres createdb wordplease -O wordplease
 ```
 
 # Clonar la aplicación en el directorio del usuario de la aplicación
@@ -109,7 +109,7 @@ sudo -u postgres createdb wordplease -O wordplease
 Lo primero será identificarnos como el usuario en cuestión
 
 ```
-sudo -u wordplease -i
+$ sudo -u wordplease -i
 ```
 
 ## Instalación de pyenv
@@ -117,29 +117,177 @@ sudo -u wordplease -i
 Esto nos permite instalar cualquier versión de Python fácilmente y, por supuesto, crear diferentes entornos separados.
 
 ```
-git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+$ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+$ git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 ```
 
 Después de eso, hay que preparar el perfil de bash para cada inicio de sesión, de forma que utilice pyenv:
 
 ```
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
-echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+$ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+$ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
 ```
 
 Para que los cambios surjan efecto cerramos la sesión del usuario y la volvemos a abrir:
 
 ```
-logout
-sudo -u wordplease -i
+$ logout
+$ sudo -u wordplease -i
 ```
 
 Ahora ya podemos instalar la versión de Python que necesitemos, en nuestro caso vamos a usar la última disponible y después crear un entorno virtual:
 
 ```
-pyenv install 3.6.4
-pyenv virtualenv 3.6.4 env
+$ pyenv install 3.6.4
+$ pyenv virtualenv 3.6.4 env
 ```
+
+## Instalando la aplicación desde GitHub
+
+Lo primero será clonar el repositorio de GitHub, pero como no necesitamos
+toda la historia del desarrollo, vamos a hacerlo, indicando
+a git que solamente se descargue el último commit:
+
+```
+$ git clone --depth=1 https://github.com/tonybolanyo/wordplease.git
+```
+
+También vamos a crear una carpeta `logs` para tener todos
+los logs relativos a nuestra app en un solo sitio.
+
+```
+$ mkdir logs
+```
+
+Es el momento de activar el entorno virtual e instalar las
+dependencias, agregando además `gunicorn` para poder
+servir nuestra aplicación.
+
+```
+// como usuario wordplease
+$ pyenv activate env
+$ pip install -r wordplease/requirements.txt
+$ pip gunicorn
+```
+
+El siguiente paso será aplicar las migraciones, recopilar los archivos
+estáticos y crear un
+superusuario, pero antes necesitamos crear las variables
+de entorno que va a utilizar nuestra aplicación (podemos
+obviar de momento los correos electrónicos, pero no los
+relativos a la base de datos, secret key y el archivo
+settings a utilizar).
+
+```
+$ export SECRET_KEY=<secret_key>
+$ export DB_NAME=wordplease
+$ export DB_USER=wordplease
+$ export DJANGO_SETTINGS_MODULE=wordplease.settings_production
+
+$ cd wordplease/src
+$ python manage.py migrate
+$ python manage.py collectstatic --noinput
+$ python manage.py createsuperuser
+```
+
+Ahora ya podemos cerrar la sesión del usuario `wordplease` y
+volver a nuestro usuario con capacidades de `sudo`.
+
+```
+$ pyenv deactivate
+$ logout
+```
+
+# Circus, gunicorn y nginx
+
+## Configuración de gunicorn
+
+Creamos un archivo de configuración para la aplicación:
+
+```
+$ sudo vim /etc/circus/conf.d/wordplease.ini
+```
+
+Con el siguiente contenido (recuerda cambiar los datos sensibles):
+
+```
+[watcher:wordplease]
+working_dir = /home/wordplease/wordplease/src/
+cmd = gunicorn
+args = -w 1 -t 180 --pythonpath=. -b unix:/home/wordplease/wordplease.sock wordplease.wsgi
+uid = wordplease
+numprocesses = 1
+autostart = true
+send_hup = true
+stdout_stream.class = FileStream
+stdout_stream.filename = /home/wordplease/logs/gunicorn.stdout.log
+stdout_stream.max_bytes = 10485760
+stdout_stream.backup_count = 4
+stderr_stream.class = FileStream
+stderr_stream.filename = /home/wordplease/logs/gunicorn.stderr.log
+stderr_stream.max_bytes = 10485760
+stderr_stream.backup_count = 4
+copy_env = true
+virtualenv = /home/wordplease/.pyenv/versions/env
+virtualenv_py_ver = 3.6
+
+[env:wordplease]
+DJANGO_SETTINGS_MODULE = wordplease.settings_production
+SECRET_KEY = <secret_key>
+DB_NAME = wordplease
+DB_USER = wordplease
+```
+
+Ahora simplemente iniciamos el servicio de circus y nuestra app
+estará en marcha. Para tenerla online, tenemos que configurar
+un sitio en el servidor web `nginx`.
+
+```
+# /etc/nginx/sites-available/wordplease
+server {
+	listen 80;
+	server_name wordplease.tonygb.com;
+
+	access_log /home/wordplease/logs/nginx-access.log;
+	error_log /home/wordplease/logs/nginx-error.log;
+
+	root /home/wordplease/wordplease/src/;
+
+	client_max_body_size 10M;
+
+	location /static {
+		alias /home/wordplease/wordplease/src/static;
+	}
+
+    location /media {
+        alias /home/wordplease/wordplease/src/media;
+    }
+
+	location / {
+		include proxy_params;
+		proxy_pass http://unix:/home/wordplease/wordplease.sock;
+	}
+}
+```
+
+Creando un enlace simbólico en sites-enabled lo tendremos listo.
+Obviamente, en el proveedor de dominio hemos establecido el DNS
+para acceder a la IP del servidor.
+
+```
+$ sudo ln -s /etc/nginx/sites-available/wordplease /etc/nginx/sites-enabled/
+```
+
+Probamos la configuración y si todo está correcto reiniciamos
+el servicio `nginx`.
+
+```
+$ sudo nginx -t
+$ sudo service nginx restart
+```
+
+# Referencias
+Basado en el gist https://gist.github.com/kasappeal/b54ecf22ca302223fa914d3e355c7c21
+de Alberto Casero.

@@ -10,7 +10,7 @@ de la práctica pueden leerse aquí](statements.md)
 
 # Índice de la documentación
 
-- [Cómo instalarlo](installation.md)
+- [Cómo contribuir al desarrollo](installation.md)
 - [Rutas disponibles en el sitio web](web-routes.md).
 - [Vistas y formulario de autenticación](user_auth.md).
 - [Sobre la implementación de la lista de blogs](listing_blogs.md)

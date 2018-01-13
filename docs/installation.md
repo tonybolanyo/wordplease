@@ -36,3 +36,6 @@ $ python manage.py createsuperuser
 $ python manage.py runserver
 
 ```
+
+Si lo que quieres es instalarlo en una máquina en producción
+lee las notas del apartado [Despliegue](deploy.md)
