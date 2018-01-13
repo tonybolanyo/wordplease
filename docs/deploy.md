@@ -366,5 +366,4 @@ Una vez realizados todos los pasos del asistente ya tenemos acceso a través de 
 
 
 # Referencias
-Basado en el gist https://gist.github.com/kasappeal/b54ecf22ca302223fa914d3e355c7c21
-de Alberto Casero.
+Basado en el [gist de Alberto Casero](https://gist.github.com/kasappeal/b54ecf22ca302223fa914d3e355c7c21).
