@@ -15,4 +15,5 @@ de la práctica pueden leerse aquí](statements.md)
 - [Vistas y formulario de autenticación](user_auth.md).
 - [Sobre la implementación de la lista de blogs](listing_blogs.md)
 - [Despliegue](deploy.md)
+- [Actualizar versión desde el repositorio](update_deploy.md)
 - [Notas adicionales](additional_notes.md)
