@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: WordPlease 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-14 19:19+0100\n"
-"PO-Revision-Date: 2018-01-14 19:11+0100\n"
-"Last-Translator: Tony G. Bolaño <tonybolanyo@gmail.com>\n"
-"Language-Team: Tony G. Bolaño <tonybolanyo@gmail.com>\n"
+"POT-Creation-Date: 2018-01-14 19:27+0100\n"
+"PO-Revision-Date: 2018-01-14 19:31+0100\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: Tony G. Bolaño <tonybolanyo@gmail.com>\n"
+"Language-Team: WordPlease\n"
+"X-Generator: Poedit 2.0.1\n"
 
 #: blogs/models.py:13
 msgid "name"
@@ -40,11 +40,11 @@ msgstr "introducción"
 
 #: blogs/models.py:33
 msgid "body"
-msgstr "cuerpo"
+msgstr "artítulo"
 
 #: blogs/models.py:34
 msgid "featured media"
-msgstr "imagen o vídeo destacado"
+msgstr "imagen/vídeo destacado"
 
 #: blogs/models.py:39
 msgid "is featured video?"
