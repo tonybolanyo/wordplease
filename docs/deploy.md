@@ -81,10 +81,10 @@ Si todo ha ido bien, esta será la forma de conexión a partir de ahora y podemo
 
 # Instalar paquetes necesartios
 
-Lo primero será instalar postgreSQL, nginx y algunas librerías adicionales necesarias para compilar python.
+Lo primero será instalar postgreSQL, nginx y algunas librerías adicionales necesarias para compilar python (actualizado para Ubuntu 18.04).
 
 ```
-$ sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev python-setuptools circus
+$ sudo apt-get install postgresql nginx build-essential zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev python-setuptools circus libffi-dev
 ```
 
 # Crear un usuario para la aplicación
